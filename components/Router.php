@@ -16,14 +16,34 @@
             {
                 return trim($_SERVER['REQUEST_URI'], '/');
             }
+
+            return null;
         }
+
         public function run()
         {
             $uri = $this->getURI();
+            if (empty($uri))
+            {
+                $controllerName = 'IndexController';
+                $actionName = 'actionIndex';
 
-            foreach ($this->routes as $uriPattern => $path) {
+                $controllerFile = ROOT . '/controllers/' .$controllerName. '.php';
+                if (file_exists($controllerFile))
+                {
+                    include_once($controllerFile);
+                }
 
-                if(preg_match("~$uriPattern~", $uri)) {
+                $controllerObject = new $controllerName;
+                $result = $controllerObject->$actionName();
+                exit;
+
+            }
+
+            foreach ($this->routes as $key => $path)
+            {
+                if(preg_match("~$path~", $uri))
+                {
 
                     $segments = explode('/', $path);
 
@@ -33,17 +53,37 @@
                     $actionName = 'action'.ucfirst((array_shift($segments)));
 
                     $controllerFile = ROOT . '/controllers/' .$controllerName. '.php';
-                    if (file_exists($controllerFile)) {
+                    if (file_exists($controllerFile))
+                    {
                         include_once($controllerFile);
                     }
 
                     $controllerObject = new $controllerName;
                     $result = $controllerObject->$actionName();
-                    if ($result != null) {
+                    if ($result != null)
+                    {
                         break;
                     }
                 }
+                elseif (!preg_match("~/~", $uri))
+                {
+                    $controllerName = ucfirst($uri).'Controller';
+                    $controllerFile = ROOT . '/controllers/' .$controllerName. '.php';
+                    if (file_exists($controllerFile))
+                    {
+                        include_once($controllerFile);
+                    }
 
+                    $actionName = 'actionIndex';
+
+                    $controllerObject = new $controllerName;
+                    $result = $controllerObject->$actionName();
+
+                    if ($result == null)
+                    {
+                        break;
+                    }
+                }
             }
         }
     }
