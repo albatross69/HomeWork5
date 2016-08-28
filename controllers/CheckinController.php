@@ -50,7 +50,10 @@ class CheckinController
                 if ($this->model->addUser($input))
                 {
                     copy($_FILES['photo']['tmp_name'], $file);
-                    echo 'Пользователь добавлен';
+                    session_start();
+                    $_SESSION['login'] = $username;
+                    $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+                    header('Location:'.$host.'user');
                 }
                 else
                 {

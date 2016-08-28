@@ -8,7 +8,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form name="Loginform" method="post" action="">
+    <form name="Loginform" method="post" action="/login/authorize">
         <p><label for="username">Имя пользователя <br>
             <input name="username" type="text">
         </label></p>

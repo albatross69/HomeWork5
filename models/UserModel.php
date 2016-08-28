@@ -14,6 +14,7 @@
             $this->mysql->query('SET NAMES UTF-8');
         }
 
+        //Проверяет, существует ли пользователь с данным юзернеймом
         public function is_username_exist($username)
         {
             $select = "SELECT username FROM `users`";
@@ -37,6 +38,7 @@
             }
         }
 
+        //Добавляет данные о пользователе, переданные при регистрации
         public function addUser($input)
         {
             $query = "INSERT INTO users(`username`, `password`, `name`, `age`, `about`, `Img`) VALUES (?,?,?,?,?,?)";
@@ -48,5 +50,28 @@
                 return true;
             }
 
+        }
+
+        public function is_password_right($username, $password)
+        {
+            $query = "SELECT password FROM `users` WHERE username = '$username'";
+            $result = $this->mysql->query($query);
+            $user_data = $result->fetch_all(MYSQLI_ASSOC);
+
+            if (empty($user_data[0]['password']))
+            {
+               return false;
+            }
+            else
+            {
+                if ($user_data[0]['password'] == $password)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
     }
