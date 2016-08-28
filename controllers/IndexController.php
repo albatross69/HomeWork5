@@ -5,6 +5,6 @@ class IndexController
 {
     public function actionIndex()
     {
-        echo 'Главная';
+        require_once(ROOT.'/view/MainView.php');
     }
 }

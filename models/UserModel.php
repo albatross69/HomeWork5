@@ -14,11 +14,39 @@
             $this->mysql->query('SET NAMES UTF-8');
         }
 
-        public function getUsers()
+        public function is_username_exist($username)
         {
-            $query = $this->mysql->query('SELECT id, username, name, age, about FROM users');
-            $res = $query->fetch_all(MYSQLI_ASSOC);
+            $select = "SELECT username FROM `users`";
+            $result = $this->mysql->query($select);
+            $logins = $result->fetch_all(MYSQLI_ASSOC);
 
-            return $res;
+            foreach ($logins as $key => $logarr)
+            {
+                foreach ($logarr as $login)
+                {
+                    if ($username == $login)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+            }
+        }
+
+        public function addUser($input)
+        {
+            $query = "INSERT INTO users(`username`, `password`, `name`, `age`, `about`, `Img`) VALUES (?,?,?,?,?,?)";
+            $adduser = $this->mysql->prepare($query);
+            if ($adduser->bind_param('sssiss', $input['username'], $input['password'], $input['name'], $input['age'],
+                $input['about'], $input['Img']))
+            {
+                $adduser->execute();
+                return true;
+            }
+
         }
     }

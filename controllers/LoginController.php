@@ -4,6 +4,6 @@ class LoginController
 {
     public function actionIndex()
     {
-        echo 'Авторизация';
+        require_once(ROOT.'/view/LoginView.php');
     }
 }
