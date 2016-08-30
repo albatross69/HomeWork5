@@ -1,11 +1,12 @@
 <?php
     return array(
-        'checkin' => 'checkin/index',
-        'registr' => 'checkin/reg',
-        'login' => 'login/index',
-        'authorize' => 'login/authorize',
-        'user' => 'user/index',
-        'loadfile' => 'user/load',
-        'getpersonlist' => 'user/userlist',
-        'getfilelist' => 'user/filelist'
+        'checkin/index',
+        'checkin/reg',
+        'login/index',
+        'login/authorize',
+        'user/index',
+        'user/load',
+        'user/userlist',
+        'user/filelist',
+        'user/quit'
     );

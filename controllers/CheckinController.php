@@ -47,7 +47,7 @@ class CheckinController
             if (preg_match('/jpg|jpeg/', $phototype) or preg_match('/gif/', $phototype) or
                 preg_match('/png/', $phototype))
             {
-                if ($this->model->addUser($input))
+                if ($this->model->addUser($input) && $this->model->addtoUserfiles($input))
                 {
                     copy($_FILES['photo']['tmp_name'], $file);
                     session_start();

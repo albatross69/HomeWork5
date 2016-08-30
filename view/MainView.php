@@ -12,6 +12,7 @@
     <ul>
         <li><a href="/">Главная</a></li>
         <li><a href="/login">Вход</a></li>
+        <li><a href="/user">Функционал</a></li>
         <li><a href="/checkin">Регистрация</a></li>
     </ul>
 </body>

@@ -19,5 +19,6 @@
 
         <p><input type="submit" value="Вход"></p>
     </form>
+    <p><a href="/">На главную</a></p>
 </body>
 </html>

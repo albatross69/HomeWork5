@@ -49,9 +49,21 @@
                 $adduser->execute();
                 return true;
             }
+        }
+
+        public function addtoUserfiles($input)
+        {
+            $query = "INSERT INTO userfiles(`username`, `Img`) VALUES (?,?)";
+            $addinfo = $this->mysql->prepare($query);
+            if ($addinfo->bind_param('ss', $input['username'], $input['Img']))
+            {
+                $addinfo->execute();
+                return true;
+            }
 
         }
 
+        //Проверяет правильность введенного пароля
         public function is_password_right($username, $password)
         {
             $query = "SELECT password FROM `users` WHERE username = '$username'";
@@ -73,5 +85,38 @@
                     return false;
                 }
             }
+        }
+
+        //Возвращает данные о пользователе
+        public function getUsers()
+        {
+            $query = "SELECT username, name, age, about FROM `users`";
+            $result = $this->mysql->query($query);
+            $userlist = $result->fetch_all(MYSQLI_ASSOC);
+
+            return $userlist;
+        }
+
+        //Добавление картинки в таблицу userfiles
+        public function addImg($username, $imgname)
+        {
+            $query = "INSERT INTO userfiles(`username`, `Img`) VALUES (?,?)";
+            $addimg = $this->mysql->prepare($query);
+            if ($addimg->bind_param('ss', $username, $imgname))
+            {
+                $addimg->execute();
+                return true;
+            }
+            return false;
+        }
+
+        //Возвращает список файлов, загруженных пользователем
+        public function getFiles($username)
+        {
+            $query = "SELECT Img FROM `userfiles` WHERE username = '$username'";
+            $res = $this->mysql->query($query);
+            $filelist = $res->fetch_all(MYSQLI_ASSOC);
+
+            return $filelist;
         }
     }

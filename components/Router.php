@@ -40,7 +40,7 @@
 
             }
 
-            foreach ($this->routes as $key => $path)
+            foreach ($this->routes as $path)
             {
                 if(preg_match("~$path~", $uri))
                 {
